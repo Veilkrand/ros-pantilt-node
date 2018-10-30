@@ -1,0 +1,9 @@
+<launch>
+
+    <node pkg="pantilt_node" type="pantilt_node.py" name="pantilt_node" output="screen">
+
+        <param name="input_rotation_topic" type="string" value="/cmd_pantilt"/>
+
+    </node>
+
+</launch>
