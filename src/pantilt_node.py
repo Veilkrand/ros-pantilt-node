@@ -11,6 +11,10 @@ class Subscriber(object):
 
     def __init__(self, input_topic, rate, controller):
 
+        # Extra params
+        self.scale_tilt = rospy.get_param("~scale_tilt", -10)
+        self.scale_pan = rospy.get_param("~scale_pan", 10)
+
         self.controller = controller
         self.rospy_rate = rate
         self.latest_msg = None
@@ -31,19 +35,22 @@ class Subscriber(object):
         # print(data.axes)
         tilt = data.axes[1]
         pan = data.axes[0]
-        self.controller.pantilt_increase_angle(pan * 10, tilt * -10)
+        self.controller.pantilt_increase_angle(pan * self.scale_pan, tilt * self.scale_tilt)
         # self.controller.pantilt_magnitude(pan, tilt)
 
     def _process_msg(self, data):
-    """
-    For rqt compatibility we are using `linear.x` and `angular.z` from a Twist message.
-    However it should be `angular.x` and `angular.y`
-    """
+        """
+        For rqt compatibility we are using `linear.x` and `angular.z` from a Twist message.
+        However it should be `angular.x` and `angular.y`
+        """
+
         # print(data)
+
         tilt = data.linear.x
         pan = data.angular.z
+
         #self.controller.pantilt_magnitude(pan, tilt)
-        self.controller.pantilt_increase_angle(pan*10, tilt*-10)
+        self.controller.pantilt_increase_angle(pan * self.scale_pan, tilt * self.scale_tilt)
 
     def _loop(self):
 

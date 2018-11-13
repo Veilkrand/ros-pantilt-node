@@ -10,11 +10,17 @@ For rqt compatibility we are using `linear.x` and `angular.z` from a Twist messa
 
 `roslaunch pantilt_node default.launch`
 
+---
 
 ## (Move to another Teleop node) PS4 support with ds4drv
 
 PS4 controller needs to emulate xbox controller. Use ros joy node.
+http://wiki.ros.org/joy/Tutorials/WritingTeleopNode
 
+### Run ROS joy_node
+`rosrun joy joy_node`
+
+### Use ds4drv
 Install:
 `sudo pip install ds4drv`
 
